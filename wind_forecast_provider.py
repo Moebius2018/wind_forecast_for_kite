@@ -33,8 +33,9 @@ class Wind_Forecast_Provider():
         for i in range(0,24):
             self.wind_forecast.date_list.append(datetime(current_date.year,current_date.month,current_date.day+1, i))
             #start_date = datetime(current_date.year,current_date.month,current_date.day+1, i)
-            self.wind_forecast.wind_average_list.append(15 + randint(-10, 15))
-            self.wind_forecast.wind_gust_list.append(18 + randint(-5, 15))
+            wind_speed = 15 + randint(-10, 15)
+            self.wind_forecast.wind_average_list.append(wind_speed)
+            self.wind_forecast.wind_gust_list.append(wind_speed + randint(0,8))
    #         x = randint(-10, 10)
    #         y = randint(-10,10)
    #         self.windforecast[start_date] = [12+x , 14+y]
@@ -53,10 +54,12 @@ class Wind_Forecast_Provider():
     def display_windforecast_graph(self):
         #display forecast on a graph
         fig = plt.figure()
-        x = self.wind_forecast.date_list
-        y=  self.wind_forecast.wind_average_list
-        plt.plot(x , y)
-        plt.ylabel('windspeed')
+        date = self.wind_forecast.date_list
+        wind_speed=  self.wind_forecast.wind_average_list
+        gust_speed = self.wind_forecast.wind_gust_list
+        plt.plot(date , wind_speed, c="blue")
+        plt.plot(date, gust_speed, c="red")
+        plt.ylabel('average windspeed and gust')
         fig.autofmt_xdate()
         plt.show()
 
