@@ -1,6 +1,7 @@
 from datetime import datetime
 from matplotlib import pyplot as plt
 from random import *
+from wind_forecast import Wind_Forecast
 
 
 
@@ -10,7 +11,8 @@ class Wind_Forecast_Provider():
 
     def __init__(self,name ):
         self.name = name
-        self.windforecast = {}
+       # self.windforecast = {}
+        self.wind_forecast = Wind_Forecast()
 
 
     def get_provider_description(self):
@@ -29,36 +31,30 @@ class Wind_Forecast_Provider():
         current_date = datetime.today()
 
         for i in range(0,24):
-            start_date = datetime(current_date.year,current_date.month,current_date.day+1, i)
-            x = randint(-10, 10)
-            y = randint(-10,10)
-            self.windforecast[start_date] = [12+x , 14+y]
-        return self.windforecast
+            self.wind_forecast.date_list.append(datetime(current_date.year,current_date.month,current_date.day+1, i))
+            #start_date = datetime(current_date.year,current_date.month,current_date.day+1, i)
+            self.wind_forecast.wind_average_list.append(15 + randint(-10, 15))
+            self.wind_forecast.wind_gust_list.append(18 + randint(-5, 15))
+   #         x = randint(-10, 10)
+   #         y = randint(-10,10)
+   #         self.windforecast[start_date] = [12+x , 14+y]
+        return self.wind_forecast
 
-    def display_windforecast(self, windforecast):
-        for key, value in windforecast.items():
-            print("date: " + key.strftime("%d/%m/%Y - %H"))
-            print(' '*4 + "average wind speed: " + str(value[0]) + " knots")
-            print(' '*4 + "gust wind speed: " + str(value[1]) + " knots")
-
-    def get_forecast_date_list(self, windforecast):
-        date_list = []
-        for key in windforecast.keys():
-            date_list.append(key.strftime("%d/%m/%y - %H:00"))
-        return date_list
+    def display_windforecast(self):
+        for i  in range(len(self.wind_forecast.date_list)):
+            # print("date: " + key.strftime("%d/%m/%Y - %H"))
+            # print(' '*4 + "average wind speed: " + str(value[0]) + " knots")
+            # print(' '*4 + "gust wind speed: " + str(value[1]) + " knots")
+            print("date: " + self.wind_forecast.date_list[i].strftime("%d/%m/%Y - %H") )
+            print(' '*4 + "average wind speed: " + str(self.wind_forecast.wind_average_list[i]) + " knots")
+            print(' '*4 + "gust wind speed: " + str(self.wind_forecast.wind_gust_list[i]) + " knots")
 
 
-    def get_forecast_average_wind_speed_list(self, windforecast):
-        av_windspeed =[]
-        for value in windforecast.values():
-                av_windspeed.append(value[0])
-        return av_windspeed
-
-    def display_windforecast_graph(self, windforecast):
+    def display_windforecast_graph(self):
         #display forecast on a graph
         fig = plt.figure()
-        x = self.get_forecast_date_list(windforecast)
-        y=  self.get_forecast_average_wind_speed_list(windforecast)
+        x = self.wind_forecast.date_list
+        y=  self.wind_forecast.wind_average_list
         plt.plot(x , y)
         plt.ylabel('windspeed')
         fig.autofmt_xdate()

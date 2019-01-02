@@ -4,5 +4,5 @@ class spot():
 
 def __init__(self, name):
     self.name = name
-    self.coordinates = []
+    self.coordinates = [0,0]
 
