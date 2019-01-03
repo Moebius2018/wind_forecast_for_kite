@@ -21,7 +21,6 @@ class Wind_Forecast_Provider():
 
     def get_wind_forecast(self, spot):
         #return windforecast for the provided spot
-
         #random wind_forecast for test
         current_date = datetime.today()
         for i in range(0,24):
@@ -43,7 +42,7 @@ class Wind_Forecast_Provider():
         fig = plt.figure()
         date = self.wind_forecast.date_list
         wind_speed=  self.wind_forecast.wind_average_list
-        gust_speed = self.wind_forecast.wind_gust_list
+        #gust_speed = self.wind_forecast.wind_gust_list
         plt.plot(date , wind_speed, c="blue")
         #plt.plot(date, gust_speed, c="red")
         plt.ylabel('average windspeed and gust')
